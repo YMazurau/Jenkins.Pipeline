@@ -17,7 +17,6 @@ pipeline {
         stage('Build and Test Image') {
             steps {
                 sh 'docker build -t ymazurau/project:itbtv.1 .'
-                sh 'docker run -d --name test-task -p 3000:3000 ymazurau/project:itbtv.1'
                 sh 'sleep 30' 
 
                 timeout(time: 5, unit: 'SECONDS') {

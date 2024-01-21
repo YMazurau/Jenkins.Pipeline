@@ -24,6 +24,7 @@ pipeline {
                         script {
                                  sh '''
                                     docker-compose up -d
+                                    sleep 30
                                     response=$(curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000)
                                     docker-compose down
                                     if [ "$response" != "200" ]

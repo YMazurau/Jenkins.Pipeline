@@ -18,13 +18,14 @@ pipeline {
             steps {
                 sh 'docker build -t ymazurau/project:itbtv.1 .'
                 sh 'sleep 5' 
+                sh 'docker-compose up -d'
 
                 timeout(time: 5, unit: 'SECONDS') {
                     retry(1) {
                         script {
                                  sh '''
-                                    docker-compose up -d
                                     response=$(curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000)
+                                    echo $response
                                     if [ "$response" != "200" ]
                                     then
                                         exit 1

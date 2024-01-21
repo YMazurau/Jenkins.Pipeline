@@ -22,31 +22,22 @@ pipeline {
                 timeout(time: 5, unit: 'SECONDS') {
                     retry(1) {
                         script {
-                            try {
-                                sh 'docker-compose up -d'
-                                sh 'sleep 120'
-                                sh 'curl http://localhost:3000'
-                                sh 'echo "###############################################################################################"'
-                        //         def response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000', returnStatus: true)
+                                 sh '''
+                                    docker-compose up -d'
+                                    response=$(curl -s -o /dev/null -w "%{http_code}\n" http://www.example.org/)
+                                    if [ "$response" != "200" ]
+                                    then
+                                        exit 1
+                                    fi
+                                    '''
 
-                        //         if (response == 200) {
-                        //         println 'WebUI of application is accessible'
-                        } else {
-                            error 'WebUI of application is not accessible'
-                        }
-                    } finally {
-                        // Остановка и удаление контейнеров
-                                sh 'docker-compose down'
-                            }
-                        }
-                    }
-                }
-
-                sh 'docker stop $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
-                sh 'docker rm $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
-            }
-        }
-
+                // sh 'docker stop $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
+                // sh 'docker rm $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
+             }
+         }
+     }
+   }
+ } 
         stage('Push Image to Registry') {
             steps {
                 script {

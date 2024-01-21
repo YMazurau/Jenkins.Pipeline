@@ -23,10 +23,19 @@ pipeline {
                     retry(3) {
                         script {
                             try {
-                                sh 'docker-compose up' 
+                                sh 'docker-compose up -d'
+                                sh 'sleep 10'
                                 sh 'curl http://localhost:3000' 
-                            } catch (Exception e) {
-                                error "WebUI of application is not accessible"
+                                def response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000', returnStatus: true)
+
+                                if (response == 200) {
+                                println 'WebUI of application is accessible'
+                        } else {
+                            error 'WebUI of application is not accessible'
+                        }
+                    } finally {
+                        // Остановка и удаление контейнеров
+                                sh 'docker-compose down'
                             }
                         }
                     }

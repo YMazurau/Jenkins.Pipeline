@@ -24,17 +24,12 @@ pipeline {
                         script {
                                  sh '''
                                     docker-compose up -d
-                                    sleep 30
                                     response=$(curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000)
-                                    docker-compose down
                                     if [ "$response" != "200" ]
                                     then
                                         exit 1
                                     fi
                                     '''
-
-                // sh 'docker stop $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
-                // sh 'docker rm $(docker ps -a -q -f ancestor=ymazurau/project:itbtv.1)'
              }
          }
      }
@@ -111,10 +106,11 @@ pipeline {
     post {
             success {
                 slackSend (channel: 'jenkins', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-        
-            }
+                sh 'docker-compose down'
+        }
             failure {
                 slackSend (channel: 'jenlins', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                sh 'docker-compose down'
             }
     }
 }

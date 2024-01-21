@@ -20,12 +20,13 @@ pipeline {
                 sh 'sleep 5' 
 
                 timeout(time: 5, unit: 'SECONDS') {
-                    retry(3) {
+                    retry(1) {
                         script {
                             try {
                                 sh 'docker-compose up -d'
                                 sh 'sleep 10'
-                                sh 'curl http://localhost:3000' 
+                                sh 'curl http://localhost:3000'
+                                sh 'echo "###############################################################################################"'
                                 def response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000', returnStatus: true)
 
                                 if (response == 200) {

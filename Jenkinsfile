@@ -24,7 +24,7 @@ pipeline {
                         script {
                             try {
                                 sh 'docker-compose up' 
-                                sh 'docker exec test-task curl http://localhost:3000' 
+                                sh 'curl http://localhost:3000' 
                             } catch (Exception e) {
                                 error "WebUI of application is not accessible"
                             }

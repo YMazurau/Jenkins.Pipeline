@@ -24,7 +24,7 @@ pipeline {
                     retry(1) {
                         script {
                                  sh '''
-                                    response=$(curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3001)
+                                    response=$(curl -s -o /dev/null -w "%{http_code}\n" http://localhost:3000)
                                     echo $response
                                     if [ "$response" != "200" ]
                                     then

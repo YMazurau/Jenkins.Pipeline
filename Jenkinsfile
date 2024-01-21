@@ -24,7 +24,7 @@ pipeline {
                         script {
                             try {
                                 sh 'docker-compose up -d'
-                                sh 'sleep 10'
+                                sh 'sleep 120'
                                 sh 'curl http://localhost:3000'
                                 sh 'echo "###############################################################################################"'
                                 def response = sh(script: 'curl -s -o /dev/null -w "%{http_code}" http://localhost:3000', returnStatus: true)

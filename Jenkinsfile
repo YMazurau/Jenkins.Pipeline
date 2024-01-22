@@ -64,19 +64,19 @@ pipeline {
                 // sh 'ssh -L 6443:127.0.0.1:6443 ym@192.168.56.116 -f -N'
                 sh 'kubectl apply -f preprod.yaml'
 
-                // timeout(time: 5, unit: 'MINUTES') {
-                //     script {
-                //         // Test if deployment is successful
-                //         try {
-                //             sh 'sleep 300'
-                //             sh 'kubectl rollout status deployment/project --namespace preprod'
-                //         } catch (Exception e) {
-                //             error "Deployment to Pre-Prod failed"
-                //         }
+                timeout(time: 5, unit: 'MINUTES') {
+                    script {
+                        // Test if deployment is successful
+                        try {
+                            sh 'sleep 300'
+                            sh 'kubectl rollout status deployment/ubuntu --namespace default'
+                        } catch (Exception e) {
+                            error "Deployment to Pre-Prod failed"
+                        }
 
-                //         // Display message and prompt for approval
-                //         echo 'Deployment to Pre-Prod is successful'
-                //         input message: 'Approve Deployment to Prod', submitter: 'jenkins'
+                        // Display message and prompt for approval
+                        echo 'Deployment to Pre-Prod is successful'
+                        input message: 'Approve Deployment to Prod', submitter: 'jenkins'
                     }
                 }
             }

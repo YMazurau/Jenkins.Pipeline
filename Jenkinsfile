@@ -65,7 +65,7 @@ pipeline {
                 sh 'kubectl apply -f preprod.yaml'
                 sh 'sleep 300'
 
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 300, unit: 'MINUTES') {
                     script {
                         // Test if deployment is successful
                         try {

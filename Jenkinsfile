@@ -62,6 +62,7 @@ pipeline {
                 // Deploy to Pre-Prod namespace
                 // sh 'kubectl config use-context your-kubectl-context'
                 // sh 'ssh -L 6443:127.0.0.1:6443 ym@192.168.56.116 -f -N'
+                sh 'echo "ls -al"'
                 sh 'kubectl apply -f preprod.yaml'
 
                 timeout(time: 5, unit: 'MINUTES') {

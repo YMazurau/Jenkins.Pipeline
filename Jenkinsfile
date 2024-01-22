@@ -61,7 +61,7 @@ pipeline {
 
                 // Deploy to Pre-Prod namespace
                 // sh 'kubectl config use-context your-kubectl-context'
-                sh 'kubectl apply -f preprod.yml --namespace preprod'
+                sh 'kubectl apply -f preprod.yaml --namespace preprod'
 
                 timeout(time: 5, unit: 'MINUTES') {
                     script {
@@ -89,7 +89,7 @@ pipeline {
         stage('Deploy to Prod') {
             steps {
                 // Deploy to Prod namespace
-                sh 'kubectl apply -f prod.yml --namespace prod'
+                sh 'kubectl apply -f prod.yaml --namespace prod'
 
                 timeout(time: 5, unit: 'MINUTES') {
                     script {
@@ -108,11 +108,11 @@ pipeline {
 
     post {
             success {
-                slackSend (channel: 'jenkins', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                slackSend (channel: 'incoming-webhooks', color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                 sh 'docker-compose down'
         }
             failure {
-                slackSend (channel: 'jenlins', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                slackSend (channel: 'incoming-webhooks', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
                 sh 'docker-compose down'
             }
     }

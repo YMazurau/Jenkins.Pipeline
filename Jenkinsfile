@@ -92,6 +92,7 @@ pipeline {
         stage('Deploy to Prod') {
             steps {
                 // Deploy to Prod namespace
+                sh 'kubectl create namespace preprod'
                 sh 'kubectl apply -f Proddbpass_secret.yaml'
                 sh 'kubectl apply -f prod.yaml'
 

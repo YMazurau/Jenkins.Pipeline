@@ -62,6 +62,7 @@ pipeline {
                 // Deploy to Pre-Prod namespace
                 // sh 'kubectl config use-context your-kubectl-context'
                 // sh 'ssh -L 6443:127.0.0.1:6443 ym@192.168.56.116 -f -N'
+                sh 'kubectl create namespace preprod'
                 sh 'kubectl apply -f dbpass_secret.yaml'
                 sh 'kubectl apply -f preprod.yaml'
 
@@ -92,7 +93,7 @@ pipeline {
         stage('Deploy to Prod') {
             steps {
                 // Deploy to Prod namespace
-                sh 'kubectl create namespace preprod'
+                sh 'kubectl create namespace prod'
                 sh 'kubectl apply -f Proddbpass_secret.yaml'
                 sh 'kubectl apply -f prod.yaml'
 

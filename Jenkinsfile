@@ -88,6 +88,7 @@ pipeline {
             steps {
                 // Remove deployment from Pre-Prod namespace
                 sh 'kubectl delete deployment project --namespace preprod'
+                sh 'kubectl delete namespace preprod'
             }
         }
         stage('Deploy to Prod') {

@@ -8,11 +8,6 @@ pipeline {
             }
         }
 
-        stage('Validate Dockerfile') {
-            steps {
-                sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
-            }
-        }
 
         stage('Build and Test Image') {
             steps {
@@ -36,6 +31,13 @@ pipeline {
      }
    }
  } 
+
+        stage('Validate Dockerfile') {
+            steps {
+                sh 'docker run --rm -i hadolint/hadolint < Dockerfile'
+            }
+        }
+
         stage('Push Image to Registry') {
             steps {
                 script {

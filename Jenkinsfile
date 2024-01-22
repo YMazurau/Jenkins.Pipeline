@@ -63,12 +63,12 @@ pipeline {
                 // sh 'kubectl config use-context your-kubectl-context'
                 // sh 'ssh -L 6443:127.0.0.1:6443 ym@192.168.56.116 -f -N'
                 sh 'kubectl apply -f preprod.yaml'
-                sh 'sleep 300'
 
-                timeout(time: 300, unit: 'MINUTES') {
+                timeout(time: 5, unit: 'MINUTES') {
                     script {
                         // Test if deployment is successful
                         try {
+                            sh 'sleep 300'
                             sh 'kubectl rollout status deployment/project --namespace preprod'
                         } catch (Exception e) {
                             error "Deployment to Pre-Prod failed"

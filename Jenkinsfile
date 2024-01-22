@@ -105,6 +105,7 @@ pipeline {
                             sh 'kubectl rollout status deployment/project --namespace prod'
                         } catch (Exception e) {
                             error "Deployment to Prod failed"
+                            sh 'kubectl delete namespace prod'
                         }
                     }
                 }

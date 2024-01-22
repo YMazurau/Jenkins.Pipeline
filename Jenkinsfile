@@ -11,7 +11,6 @@ pipeline {
 
         stage('Build and Test Image') {
             steps {
-                sh 'docker build -t ymazurau/project:itbtv.1 .'
                 sh 'sleep 5' 
                 sh 'docker-compose up -d'
 
@@ -29,6 +28,7 @@ pipeline {
              }
          }
      }
+                sh 'docker build -t ymazurau/project:itbtv.1 .'
    }
  } 
 

@@ -1,0 +1,1 @@
+Test task for the "DevOps" direction for IT Bootcamp.

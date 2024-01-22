@@ -68,8 +68,8 @@ pipeline {
                     script {
                         // Test if deployment is successful
                         try {
-                            sh 'sleep 300'
-                            sh 'kubectl rollout status deployment/ubuntu --namespace default'
+                            sh 'sleep 15'
+                            sh 'kubectl rollout status deployment/project --namespace preprod'
                         } catch (Exception e) {
                             error "Deployment to Pre-Prod failed"
                         }

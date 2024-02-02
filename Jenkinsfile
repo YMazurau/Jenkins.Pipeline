@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build and Test Image') {
             steps {
-                sh 'sleep 5' 
+                sh 'sleep 15' 
                 sh 'docker-compose up -d'
 
                 timeout(time: 5, unit: 'SECONDS') {
